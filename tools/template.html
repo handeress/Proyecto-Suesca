@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obra __PROYECTO__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F3EF; --surface:#FFFFFF; --ink:#1D2622; --muted:#5E6B64; --line:#D9DDD6;
+  --paid:#3F6B4F; --pend:#B5782F; --free:#C9D0C8; --soft:#E7EBE4;
+  --display:"Epilogue", "Helvetica Neue", Arial, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#131A17; --surface:#1B2420; --ink:#E6EBE7; --muted:#9AA8A0; --line:#2E3A34;
+    --paid:#6FA383; --pend:#D69B52; --free:#3A4640; --soft:#222C27;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#131A17; --surface:#1B2420; --ink:#E6EBE7; --muted:#9AA8A0; --line:#2E3A34;
+  --paid:#6FA383; --pend:#D69B52; --free:#3A4640; --soft:#222C27;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:36px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,6vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+h2{font-size:20px;font-weight:700}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:10px}
+header p{margin:0;color:var(--muted);max-width:60ch}
+
+.budget{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:20px}
+.budget-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.budget-top .big{font-family:var(--display);font-weight:800;font-size:clamp(26px,5vw,34px)}
+.bar{display:flex;height:22px;border-radius:4px;overflow:hidden;background:var(--free)}
+.bar span{display:block;height:100%}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.legend div{display:flex;flex-direction:column;gap:2px}
+.legend .k{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.legend .k i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.legend .v{font-size:18px;font-weight:500}
+.legend .p{font-size:12px;color:var(--muted)}
+
+section{display:flex;flex-direction:column;gap:14px}
+section > p.note{margin:0;color:var(--muted);font-size:13px}
+.cats{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.cat{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cat .name{font-weight:600}
+.cat .amt{text-align:right}
+.cat .mini{grid-column:1/-1;display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--soft)}
+.cat .mini span{display:block;height:100%}
+.cat .sub{grid-column:1/-1;font-size:13px;color:var(--muted)}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.pill.ok{background:color-mix(in srgb,var(--paid) 16%,transparent);color:var(--paid)}
+.pill.pe{background:color-mix(in srgb,var(--pend) 18%,transparent);color:var(--pend)}
+.detail{color:var(--muted);font-size:13px}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+[hidden]{display:none!important}
+.prog{display:flex;flex-direction:column;gap:10px}
+.prog .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.prog .pc{font-family:var(--display);font-weight:800;font-size:clamp(26px,5vw,34px)}
+.tag{font-size:12px;color:var(--muted)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.gal figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.gal a{display:block}
+.gal img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.gal figcaption{padding:8px 10px;font-size:13px;color:var(--muted)}
+
+.fases{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.docs{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.doc{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.doc:hover .dn{text-decoration:underline}
+.doc .dn{font-weight:600}.doc .dd{font-size:13px;color:var(--muted)}
+.doc .dt{font-size:12px;color:var(--muted);white-space:nowrap}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+<main class="wrap">
+  <header>
+    <span class="eyebrow">Proyecto · __PROYECTO__</span>
+    <h1>Estado de cuentas de la obra</h1>
+    <p id="intro">Resumen del presupuesto y de las compras registradas para el proyecto. Corte de revisión: <strong id="corte">—</strong>. Valores en pesos colombianos.</p>
+  </header>
+
+  <div class="budget" id="budgetBox" aria-label="Ejecución del presupuesto">
+    <div class="budget-top">
+      <span class="eyebrow" id="presLbl">Presupuesto acordado</span>
+      <span class="big num" id="pres">—</span>
+    </div>
+    <div class="bar" role="img" id="bar"><span id="barP" style="background:var(--paid)"></span><span id="barS" style="background:var(--pend)"></span></div>
+    <div class="legend">
+      <div><span class="k"><i style="background:var(--paid)"></i>Pagado</span><span class="v num" id="vPag">—</span><span class="p" id="pPag"></span></div>
+      <div><span class="k"><i style="background:var(--pend)"></i>Comprometido por pagar</span><span class="v num" id="vSal">—</span><span class="p" id="pSal"></span></div>
+      <div id="disBox"><span class="k"><i style="background:var(--free)"></i>Disponible</span><span class="v num" id="vDis">—</span><span class="p" id="pDis"></span></div>
+    </div>
+  </div>
+
+  <section id="avSec" hidden>
+    <h2>Avance de obra</h2>
+    <div class="budget prog">
+      <div class="row"><span class="eyebrow">Avance general</span><span class="pc num" id="avTot">—</span></div>
+      <div class="bar" role="img" id="avBar"><span id="avBarP" style="background:var(--paid)"></span></div>
+      <span class="tag" id="avNota"></span>
+    </div>
+    <div class="cats" id="avDet"></div>
+  </section>
+
+  <section id="galSec" hidden>
+    <h2>Fotos de la obra</h2>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <section id="ingSec" hidden>
+    <h2>Dinero entregado</h2>
+    <div class="cats" id="ingDet"></div>
+  </section>
+
+  <section id="presSec" hidden>
+    <h2>Presupuesto y adicionales</h2>
+    <div class="cats" id="presDet"></div>
+  </section>
+
+  <section id="secCats">
+    <h2>Compras por frente de obra</h2>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section id="secCompras">
+    <h2>Detalle de compras y pagos</h2>
+    <p class="note" id="nota"></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Concepto</th><th>Proveedor</th><th class="r">Valor</th><th class="r">Pagado</th><th>Estado</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+  <section id="cronSec" hidden>
+    <h2>Cronograma</h2>
+    <p class="note" id="cronRes"></p>
+    <div class="cats" id="cronDet"></div>
+  </section>
+
+  <section id="docSec" hidden>
+    <h2>Documentos</h2>
+    <div class="docs" id="docDet"></div>
+  </section>
+</main>
+
+<script>
+const fmt = n => "$ " + Math.round(n).toLocaleString("es-CO");
+const esc = v => String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/*DATA*/const DATA = __DATA__;/*END*/
+const compras = DATA.compras;
+
+const pct=v=>(v*100).toLocaleString("es-CO",{maximumFractionDigits:1})+" %";
+(function(){
+  const conPres=!!DATA.presupuesto;
+  const pres=DATA.presupuesto||compras.reduce((a,x)=>a+x.t,0)||1, pag=compras.reduce((a,x)=>a+x.pg,0), cont=compras.reduce((a,x)=>a+x.t,0);
+  const conSaldo=compras.filter(x=>x.t>x.pg), sal=conSaldo.reduce((a,x)=>a+x.t-x.pg,0), dis=pres-cont;
+  const [y,m,d]=DATA.corte.split("-");
+  document.getElementById("corte").textContent=new Date(+y,m-1,+d).toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"});
+  if(!compras.length){
+    ["budgetBox","secCats","secCompras"].forEach(i=>document.getElementById(i).hidden=true);
+    document.getElementById("intro").firstChild.textContent="Resumen del presupuesto, el avance y los pagos del proyecto. Corte de revisión: ";
+    return;
+  }
+  document.getElementById("pres").textContent=fmt(conPres?pres:cont);
+  if(!conPres){document.getElementById("presLbl").textContent="Total contratado";document.getElementById("disBox").hidden=true;}
+  const base=conPres?" del presupuesto":" de lo contratado";
+  document.getElementById("barP").style.width=(pag/pres*100)+"%";
+  document.getElementById("barS").style.width=(sal/pres*100)+"%";
+  document.getElementById("bar").setAttribute("aria-label",conPres?`Pagado ${pct(pag/pres)}, comprometido por pagar ${pct(sal/pres)}, disponible ${pct(dis/pres)}`:`Pagado ${pct(pag/pres)}, por pagar ${pct(sal/pres)}`);
+  document.getElementById("vPag").textContent=fmt(pag); document.getElementById("pPag").textContent=pct(pag/pres)+base;
+  document.getElementById("vSal").textContent=fmt(sal); document.getElementById("pSal").textContent=conSaldo.length?`Saldos de ${conSaldo.length} ${conSaldo.length===1?"compra":"compras"}`:"Sin saldos pendientes";
+  document.getElementById("vDis").textContent=fmt(dis); document.getElementById("pDis").textContent=pct(dis/pres)+base;
+  document.getElementById("nota").innerHTML=`${compras.length} compras registradas. Total contratado: <span class="num">${fmt(cont)}</span>.`;
+})();
+
+(function(){
+  const pd=DATA.presupuestoDetalle; if(!pd) return;
+  const line=(n,v,sub)=>`<div class="cat"><span class="name"${sub?' style="font-weight:400"':''}>${esc(n)}</span><span class="amt num">${fmt(v)}</span></div>`;
+  if(pd.lineas){
+    const t=pd.lineas.reduce((a,x)=>a+x.valor,0);
+    document.getElementById("presDet").innerHTML=pd.lineas.map(x=>`<div class="cat"><span class="name">${esc(x.n)}</span><span class="amt num">${fmt(x.valor)}</span>${x.nota?`<span class="sub">${esc(x.nota)}</span>`:""}</div>`).join("")+`<div class="cat"><span class="name">Total presupuesto</span><span class="amt num"><strong>${fmt(t)}</strong></span></div>`;
+    document.getElementById("presSec").hidden=false; return;
+  }
+  let h=line("Presupuesto base",pd.base)+(pd.transporte?line("Transporte",pd.transporte):"");
+  const ad=pd.adiciones||[]; const tAd=ad.reduce((a,x)=>a+x.valor,0);
+  if(ad.length){h+=`<div class="cat"><span class="name">Adicionales</span><span class="amt num">${fmt(tAd)}</span><span class="sub">${ad.map(x=>`${esc(x.concepto)}: ${fmt(x.valor)}`).join(" · ")}</span></div>`;}
+  h+=`<div class="cat"><span class="name">Total presupuesto</span><span class="amt num"><strong>${fmt(pd.base+(pd.transporte||0)+tAd)}</strong></span></div>`;
+  document.getElementById("presDet").innerHTML=h; document.getElementById("presSec").hidden=false;
+})();
+
+(function(){
+  const av=DATA.avance; if(!av||!(av.capitulos||[]).length) return;
+  const caps=av.capitulos, tv=caps.reduce((a,c)=>a+c.valor,0);
+  const rep=caps.filter(c=>c.avance!==null&&c.avance!==undefined);
+  const tot=tv?caps.reduce((a,c)=>a+c.valor*((c.avance||0)/100),0)/tv*100:0;
+  const f1=v=>v.toLocaleString("es-CO",{maximumFractionDigits:1})+" %";
+  document.getElementById("avTot").textContent=rep.length?f1(tot):"Por reportar";
+  document.getElementById("avBarP").style.width=tot+"%";
+  document.getElementById("avBar").setAttribute("aria-label","Avance general "+f1(tot));
+  const ej=caps.reduce((a,c)=>a+c.valor*((c.avance||0)/100),0);
+  document.getElementById("avNota").textContent=(rep.length?`Ejecutado ${fmt(ej)} de ${fmt(tv)}, ponderado según el valor de cada capítulo del presupuesto. `:"")+(av.actualizado?"Actualizado: "+av.actualizado.split("-").reverse().join("/")+".":"");
+  document.getElementById("avDet").innerHTML=caps.map(c=>{const v=c.avance;const done=v===100;
+    return `<div class="cat"><span class="name">${esc(c.n)}</span><span class="amt num">${v===null||v===undefined?'<span class="tag">Por reportar</span>':f1(v)}</span>
+    <span class="mini" style="width:100%"><span style="width:${v||0}%;background:var(--paid)"></span></span>
+    <span class="sub"><span class="num">Valor ${fmt(c.valor)} · Ejecutado ${fmt(c.valor*(v||0)/100)}</span>${done?" · Completado":""}${c.nota?`<br>${esc(c.nota)}`:""}</span></div>`}).join("");
+  document.getElementById("avSec").hidden=false;
+})();
+(function(){
+  const f=DATA.fotos; if(!f||!f.length) return;
+  document.getElementById("gal").innerHTML=[...f].sort((a,b)=>(b.fecha||"").localeCompare(a.fecha||"")).map(x=>`<figure><a href="${esc(x.src)}" target="_blank" rel="noopener"><img src="${esc(x.src)}" alt="${esc(x.desc)}" loading="lazy"></a><figcaption>${x.fecha?x.fecha.split("-").reverse().join("/")+" · ":""}${esc(x.desc)}</figcaption></figure>`).join("");
+  document.getElementById("galSec").hidden=false;
+})();
+(function(){
+  const ing=DATA.ingresos; if(!ing||!ing.length) return;
+  const t=ing.reduce((a,x)=>a+x.valor,0), pres=DATA.presupuesto||0;
+  let h=ing.map(x=>`<div class="cat"><span class="name">${esc(x.n)}</span><span class="amt num">${fmt(x.valor)}</span>${x.fecha||x.nota?`<span class="sub">${x.fecha?x.fecha.split("-").reverse().join("/"):""}${x.fecha&&x.nota?" · ":""}${esc(x.nota||"")}</span>`:""}</div>`).join("");
+  h+=`<div class="cat"><span class="name">Total entregado</span><span class="amt num"><strong>${fmt(t)}</strong></span>${pres?`<span class="sub">${(t/pres*100).toLocaleString("es-CO",{maximumFractionDigits:1})} % del presupuesto · saldo por entregar ${fmt(pres-t)}</span>`:""}</div>`;
+  document.getElementById("ingDet").innerHTML=h; document.getElementById("ingSec").hidden=false;
+})();
+
+const rows = document.getElementById("rows");
+compras.forEach(x=>{
+  const saldo = x.t - x.pg;
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td class="num">${esc(x.f)}</td><td>${esc(x.c)}</td><td class="detail">${esc(x.p)}</td>
+    <td class="r num">${fmt(x.t)}</td><td class="r num">${fmt(x.pg)}</td>
+    <td>${saldo>0?`<span class="pill pe">Saldo ${fmt(saldo)}</span>`:`<span class="pill ok">Pagado</span>`}</td>`;
+  rows.appendChild(tr);
+});
+
+const groups = {};
+compras.forEach(x=>{
+  const g = groups[x.cat] ||= {t:0,pg:0,n:0};
+  g.t+=x.t; g.pg+=x.pg; g.n++;
+});
+const max = Math.max(...Object.values(groups).map(g=>g.t));
+const cats = document.getElementById("cats");
+Object.entries(groups).sort((a,b)=>b[1].t-a[1].t).forEach(([name,g])=>{
+  const saldo = g.t-g.pg;
+  const d = document.createElement("div");
+  d.className="cat";
+  d.innerHTML = `<span class="name">${esc(name)}</span><span class="amt num">${fmt(g.t)}</span>
+    <span class="mini" style="width:${(g.t/max*100).toFixed(1)}%"><span style="width:${(g.pg/g.t*100).toFixed(1)}%;background:var(--paid)"></span><span style="width:${(saldo/g.t*100).toFixed(1)}%;background:var(--pend)"></span></span>
+    <span class="sub">${g.n} ${g.n===1?"compra":"compras"} · ${saldo>0?`pagado ${fmt(g.pg)}, saldo ${fmt(saldo)}`:"pagado en su totalidad"}</span>`;
+  cats.appendChild(d);
+});
+(function(){
+  const c=DATA.cronograma; if(!c||!(c.fases||[]).length) return;
+  const f=d=>d?d.split("-").reverse().join("/"):"";
+  document.getElementById("cronRes").textContent=c.resumen||"";
+  document.getElementById("cronDet").innerHTML=c.fases.map(x=>`<div class="cat"><span class="name">${esc(x.n)}</span><span class="amt num">${f(x.desde)} – ${f(x.hasta)}</span>${x.nota?`<span class="sub">${esc(x.nota)}</span>`:""}</div>`).join("");
+  document.getElementById("cronSec").hidden=false;
+})();
+(function(){
+  const d=DATA.documentos; if(!d||!d.length) return;
+  document.getElementById("docDet").innerHTML=d.map(x=>{const ext=(x.archivo.split(".").pop()||"").toUpperCase();return `<a class="doc" href="${esc(x.archivo)}" target="_blank" rel="noopener"><span><span class="dn">${esc(x.n)}</span>${x.desc?`<br><span class="dd">${esc(x.desc)}</span>`:""}</span><span class="dt">${ext}${x.fecha?" · "+x.fecha.split("-").reverse().join("/"):""}</span></a>`}).join("");
+  document.getElementById("docSec").hidden=false;
+})();
+</script>
+
+</body>
+</html>
