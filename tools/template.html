@@ -128,12 +128,12 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   </section>
 
   <section id="ingSec" hidden>
-    <h2>Dinero entregado</h2>
+    <h2>Pagos recibidos</h2>
     <div class="cats" id="ingDet"></div>
   </section>
 
   <section id="presSec" hidden>
-    <h2>Presupuesto y adicionales</h2>
+    <h2>Presupuesto</h2>
     <div class="cats" id="presDet"></div>
   </section>
 
@@ -202,10 +202,10 @@ const pct=v=>(v*100).toLocaleString("es-CO",{maximumFractionDigits:1})+" %";
     document.getElementById("presDet").innerHTML=pd.lineas.map(x=>`<div class="cat"><span class="name">${esc(x.n)}</span><span class="amt num">${fmt(x.valor)}</span>${x.nota?`<span class="sub">${esc(x.nota)}</span>`:""}</div>`).join("")+`<div class="cat"><span class="name">Total presupuesto</span><span class="amt num"><strong>${fmt(t)}</strong></span></div>`;
     document.getElementById("presSec").hidden=false; return;
   }
-  let h=line("Presupuesto base",pd.base)+(pd.transporte?line("Transporte",pd.transporte):"");
+  let h=line("Presupuesto original",pd.base)+(pd.transporte?line("Transporte",pd.transporte):"");
   const ad=pd.adiciones||[]; const tAd=ad.reduce((a,x)=>a+x.valor,0);
-  if(ad.length){h+=`<div class="cat"><span class="name">Adicionales</span><span class="amt num">${fmt(tAd)}</span><span class="sub">${ad.map(x=>`${esc(x.concepto)}: ${fmt(x.valor)}`).join(" · ")}</span></div>`;}
-  h+=`<div class="cat"><span class="name">Total presupuesto</span><span class="amt num"><strong>${fmt(pd.base+(pd.transporte||0)+tAd)}</strong></span></div>`;
+  if(ad.length){h+=`<div class="cat"><span class="name">Adicionales</span><span class="amt num">${fmt(tAd)}</span><span class="sub">${ad.map(x=>`<span style="display:flex;justify-content:space-between;gap:12px"><span>${esc(x.concepto)}</span><span class="num">${fmt(x.valor)}</span></span>`).join("")}</span></div>`;}
+  h+=`<div class="cat"><span class="name">Valor total del proyecto</span><span class="amt num"><strong>${fmt(pd.base+(pd.transporte||0)+tAd)}</strong></span></div>`;
   document.getElementById("presDet").innerHTML=h; document.getElementById("presSec").hidden=false;
 })();
 
@@ -235,7 +235,7 @@ const pct=v=>(v*100).toLocaleString("es-CO",{maximumFractionDigits:1})+" %";
   const ing=DATA.ingresos; if(!ing||!ing.length) return;
   const t=ing.reduce((a,x)=>a+x.valor,0), pres=DATA.presupuesto||0;
   let h=ing.map(x=>`<div class="cat"><span class="name">${esc(x.n)}</span><span class="amt num">${fmt(x.valor)}</span>${x.fecha||x.nota?`<span class="sub">${x.fecha?x.fecha.split("-").reverse().join("/"):""}${x.fecha&&x.nota?" · ":""}${esc(x.nota||"")}</span>`:""}</div>`).join("");
-  h+=`<div class="cat"><span class="name">Total entregado</span><span class="amt num"><strong>${fmt(t)}</strong></span>${pres?`<span class="sub">${(t/pres*100).toLocaleString("es-CO",{maximumFractionDigits:1})} % del presupuesto · saldo por entregar ${fmt(pres-t)}</span>`:""}</div>`;
+  h+=`<div class="cat"><span class="name">Total pagado</span><span class="amt num"><strong>${fmt(t)}</strong></span>${pres?`<span class="sub">${(t/pres*100).toLocaleString("es-CO",{maximumFractionDigits:1})} % del valor total del proyecto · saldo por pagar ${fmt(pres-t)}</span>`:""}</div>`;
   document.getElementById("ingDet").innerHTML=h; document.getElementById("ingSec").hidden=false;
 })();
 
